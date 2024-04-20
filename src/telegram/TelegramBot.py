@@ -9,7 +9,6 @@ from telegram.ext import (
 import dotenv
 import os
 import logging
-import requests
 import httpx
 from requests.exceptions import RequestException
 import asyncio
@@ -307,6 +306,7 @@ class Bot:
         Returns:
             None
         """
+        self.logger.info("Running bot")
         application = ApplicationBuilder().token(self.token).build()
 
         application.add_handler(CommandHandler("start", self.start))
@@ -325,11 +325,3 @@ class Bot:
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.fetch_initial_ip())
         application.run_polling()
-
-
-if __name__ == "__main__":
-    try:
-        bot = Bot()
-        bot.run()
-    except Exception as e:
-        print(f"An error occurred: {e}")
